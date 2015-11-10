@@ -1,0 +1,15 @@
+#ifndef _AR_STACK_H
+#define _AR_STACK_H
+
+// /* class declaration */
+// template<typename T>
+// class Stack {
+// public:
+// 	Stack();
+// 	// void ~Stack();
+// 	// void push(T a);
+// 	// T pop();
+// 	// bool empty();
+// };
+
+#endif

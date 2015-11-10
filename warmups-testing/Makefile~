@@ -1,0 +1,5 @@
+stack:
+	CC -o stack stacktest.cpp
+
+clean:
+	rm stacktest
