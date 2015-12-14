@@ -1,7 +1,7 @@
 ### Data Structure Implementations
 
-##### Author
-Last Edit: December 13 2015, 21:08 (PST)
+##### Last Edit
+December 13 2015, 21:08 (PST)
 
 ##### Brief Description
 
@@ -24,7 +24,7 @@ were written so that I could brush up on my knowledge of data structures.
 - LIFO Stack (Array-Based, Linked List)
 - Bag (Array-Based)
 
-##### TOD0
+##### TODO
 
 ###### From Sedgewick, Introduction to Algorithms 
 
