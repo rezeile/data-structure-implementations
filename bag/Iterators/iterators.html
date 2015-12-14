@@ -1,0 +1,908 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>Defining C++ Iterators</title>
+<link href="styles.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<BODY>
+
+<p class="note"><a href="http://www.cs.northwestern.edu/~riesbeck/">Chris Riesbeck</a><br>
+Last updated: July 3, 2009</p>
+
+<h1>Defining C++ Iterators</h1>
+
+<OL>
+<LI><A HREF="#TOC1">Overview</A></li>
+<LI><A HREF="#TOC2">Iterators from Nested Containers</A></li>
+<LI><A HREF="#TOC3">Iterators from Pointers</A></li>
+<LI><A HREF="#TOC19">Iterators from Iterators</A></li>
+<LI><A HREF="#TOC4">Defining Iterators for New Containers:
+Overview</A>
+<OL>
+<LI><A HREF="#TOC5">A Ring Queue</A></li>
+<LI><A HREF="#TOC7">A Ring Queue Iterator</A></li>
+</OL>
+</li>
+<LI><A HREF="#TOC23">Defining Iterators for New Containers: C++ Details</A>
+<OL>
+<LI><A HREF="#TOC8">C++ Detail #1: Linking Containers and
+Iterators</A></li>
+<LI><A HREF="#TOC9">Digression: Integer Template Parameters</A></li>
+<LI><A HREF="#TOC10">C++ Detail #2: Making the Container
+Iterator-Friendly</A></li>
+<LI><A HREF="#TOC11">C++ Detail #3: begin() and
+end()</A></li>
+<LI><A HREF="#TOC12">C++ Detail #3: Storing the Container in the
+Iterator</A></li>
+<LI><A HREF="#TOC13">C++ Detail #4: Defining operator!=()
+for an iterator</A></li>
+<LI><A HREF="#TOC14">C++ Detail #5: Defining operator*()
+for an iterator</A></li>
+<LI><A HREF="#TOC15">C++ Detail #6: Defining operator++()
+for an iterator</A></li>
+<LI><A HREF="#TOC32">C++ Details: What's Missing?</A></li>
+</OL>
+</li>
+</OL>
+
+<HR>
+
+<H2><A NAME="TOC1"></A>Overview</H2>
+
+<P><A HREF="stl-iterators.html">Iterators</A> are central to the
+generality and efficiency of the
+<A HREF="stl-algorithms.html">generic algorithms</A> in the STL. All
+the STL containers (but not the adapters) define</P>
+
+<UL>
+   <LI>the <B>iterator types</B> for that container, e.g.,
+   <TT>iterator</TT> and <TT>const_iterator</TT>, e.g.,
+   <TT>vector&lt;int&gt;::iterator</TT></li>
+
+   <LI>the <B>begin/end methods</B> for that container, i.e.,
+   <TT>begin()</TT> and <TT>end()</TT></li>
+</UL>
+
+<P>(Reverse iterators, returned by <TT>rbegin()</TT> and
+<TT>rend()</TT>, are beyond the scope of this discussion.)</P>
+
+<P>Containers that don't define the above are second-class citizens.
+They can't be used with the generic algorithms. Defining iterator
+types and methods for your containers, <B>whether they're generic
+templated containers or not</B>, is often a very useful thing to do.
+</P>
+
+<P>What follows is a simplified introduction in how to define
+iterators for your own containers.
+I wish it was shorter, but C++ requires a number of little
+details to be taken care of, even when ignoring many important
+factors.</P>
+
+
+<HR>
+
+<H2><A NAME="TOC2"></A>Iterators from Nested Containers</H2>
+
+<P>Fortunately, the most common way to define the iterator types and
+begin/end methods is also the simplest. If your container uses an STL
+container in an internal data member to hold its elements, all you
+need to do is delegate the types and methods to the underlying
+container.</P>
+
+<P>For example, suppose you have a class <TT>CourseList</TT> that is
+a list of the students taking a course, and internally you use a
+vector of <TT>Student</TT> to store the course list. Then all you
+need to do is:</P>
+
+<pre class="sample-code">class CourseList {
+private:
+  typedef vector&lt;Student&gt; StudentList;
+  StudentList students;
+public:
+  typedef StudentList::iterator iterator;
+  typedef StudentList::const_iterator const_iterator;
+  iterator begin() { return students.begin(); }
+  iterator end() { return students.end(); }
+  ...
+};</pre>
+
+<P>In other words, all we do is define</P>
+
+<UL>
+   <LI><TT>CourseList::iterator</TT> and
+   <TT>CourseList::const_iterator</TT> to be whatever our container's
+   iterator types are, and</li>
+
+   <LI><TT>begin()</TT> and <TT>end()</TT> to return whatever our
+   containers's <TT>begin()</TT> and <TT>end()</TT> return</li>
+</UL>
+
+<P>This is a common programming pattern called <B>delegation</B>,
+because we delegate the work to another class.</P>
+
+<P>The <TT>StudentList</TT> typedef is optional, but it makes it easy
+to switch containers with just one line change.</P>
+
+
+<HR>
+
+
+<H2><A NAME="TOC3"></A>Iterators from Pointers</H2>
+
+<P>C pointers are legal iterators, so if your internal container is a
+simple C array, then all you need to do is return the pointers. Thus
+if we used an array for our <TT>StudentList</TT>, the code would look
+like this:</P>
+
+<pre class="sample-code">class CourseList {
+private:
+  typedef Student StudentList[100];
+  StudentList students;
+public:
+  typedef Student * iterator;
+  typedef const Student * const_iterator;
+  iterator begin() { return &amp;students[0]; }
+  iterator end() { return &amp;students[100]; }
+  ...
+};</PRE>
+
+<P>These two cases, iterators from internal STL containers, and
+iterators from pointers, cover 90% of the cases you need to worry
+about.</P>
+
+<HR>
+
+<H2><A Name="TOC19">Iterators from Iterators</A></H2>
+
+<P>Sometimes you want a variation on an iterator for a normal
+container, e.g., you want an iterator that counts or one that checks
+to make sure it's within a legal range.</P>
+
+<P>For example, Stroustrup's <EM>The C++ Programming Language</EM>,
+3rd ed., gives an example of a range-checking iterator. Musser and
+Saini's <EM>STL Reference and Tutorial Guide</EM> gives an example of
+a counting iterator.</P>
+
+<P>Defining this kind of iterator uses <B>delegation</B> a lot.
+Basically, the constructor for the new iterator takes some kind of
+existing iterator, plus whatever other kind of information it needs,
+and saves the existing iterator in a private data member. Then
+<TT>operator++()</TT>, <TT>operator*()</TT> and so on are defined
+mostly as calls to the same operators on the stored iterator, with
+whatever extra functionality you need.</P>
+
+<P>Unfortunately, while conceptually simple, this kind of iterator
+definition turns out to require a lot of special C++ incantations,
+because it can be hard for the compiler to know when something's a
+type name. If you're trying to do this, definitely get a copy of
+Stroustrup or some other reference with a detailed example.</P>
+
+<HR>
+
+
+<H2><A NAME="TOC4"></A>Defining Iterators for New Containers:
+Overview</H2>
+
+<P>Our last case of when you want to define an iterator is when you
+have a new kind of container and it needs an iterator.</P>
+
+<P>The STL does not use class hierarchies and inheritance. Therefore,
+when defining an iterator, there is no iterator superclass to start
+from. Something qualifies as an iterator as long as it defines some
+or all of the operators described on <A HREF="stl-iterators.html">the
+iterators page</A>.</P>
+
+<P>For this example, we're only going to describe and define the most
+basic operations.</P>
+
+<UL>
+   <LI><TT>operator*()</TT> -- the dereferencing operator</li>
+
+   <LI><TT>operator++()</TT> -- the incrementing operator</li>
+
+   <LI><TT>operator!=()</TT> -- the inequality operator, needed for
+   all those "&lt;TT&gt;while ( begin != end ) ...&lt;/TT&gt;" loops</li>
+</UL>
+
+<P>For our example container, we're going to implement a ring queue.</P>
+
+<H3><A NAME="TOC5"></A>A Ring Queue</H3>
+
+<P>A ring queue is a finite-sized queue that never gets full and
+never grows past a certain size. Instead, new elements replace the
+oldest elements. A ring queue lets you keep track of the most recent
+values in some stream of numbers, automatically throwing away older
+ones as you add new ones. For example, you might use a
+ring queue to get the average of the N most recently processed
+numbers.</P>
+
+<P>You create a ring queue like this:</P>
+
+<pre class="sample-code">RingQueue&lt; int, 5 &gt; ringQueue;</PRE>
+
+<P>This constructs an empty 5-element ring queue.</P>
+
+<P>Like a regular queue, you can push on the back and pop off the
+front but unlike a regular queue:</P>
+
+<UL>
+   <LI>A ring queue keeps only the N most recently pushed elements.</li>
+
+   <LI><TT>push_back()</TT> and <TT>pop_front()</TT> are used instead
+   of <TT>push()</TT> and <TT>pop()</TT> to support using generic
+   algorithms and <TT>back_inserter</TT>.</li>
+
+   <LI><TT>push_front()</TT> on a full ring queue adds the new
+   element and removes the oldest, i.e., the one at the front.</li>
+
+   <LI>Iterator access to the queue is supported with
+   <TT>begin()</TT> and <TT>end()</TT>.</li>
+</UL>
+
+<P>A common way to implement ring queues is as a simple array with
+two numbers:</P>
+
+<UL>
+   <LI><TT>myBuffer</TT>: an array of size N to hold the queue</li>
+
+   <LI><TT>myBegin</TT>: an integer indicating where the front of
+   queue is</li>
+
+   <LI><TT>mySize</TT>: an integer indicating how many elements are
+   in the queue</li>
+</UL>
+
+<P>Initially <TT>myBegin</TT> is 0, the beginning of the array. The
+end of the ring queue -- we'll call it <TT>myEnd</TT> but it's
+something we'll calculate as needed -- is given by the simple formula
+</P>
+
+<PRE class="sample-code">myEnd = (myBegin + mySize) % N</PRE>
+
+<P>We can define the following accessors:</P>
+
+<UL>
+   <LI><TT>front()</TT> -- <TT>myBuffer[ myBegin ]</TT>, assuming
+   <TT>mySize</TT> is not 0</li>
+
+   <LI><TT>back()</TT> -- <TT>myBuffer[ myEnd ]</TT>, assuming
+   <TT>mySize</TT> is not 0</li>
+</UL>
+
+<P>The rules for changing <TT>myBegin</TT> and <TT>mySize</TT> (and
+hence <TT>myEnd</TT>) are simple but slightly surprising:</P>
+
+<UL>
+   <LI><TT>pop_front()</TT> increments <TT>myBegin</TT> and
+   decrements <TT>mySize</TT>.</li>
+
+   <LI><TT>push_back()</TT> stores the value in <TT>myBuffer[ myEnd
+   ]</TT> and increments <TT>mySize</TT> up to N; thereafter, it
+   stores in the same place, but increments <TT>myBegin</TT>!</li>
+
+   <LI>Whenever <TT>myBegin</TT> reaches N, it's reset to 0.
+   <TT>mySize</TT> is never incremented past N, nor decremented below
+   0.</li>
+</UL>
+
+<P>The table shows what happens when we add and remove some elements
+to a 4 element queue.</P>
+
+<TABLE BORDER="1" style="margin-left: auto; margin-right: auto; text-align: center">
+   <TR>
+      <TH>Action
+      </TH><TH>
+         myBuffer
+      </TH><TH>myBegin
+      </TH><TH>mySize
+      </TH><TH>myEnd
+      </TH></TR>
+   <TR>
+      <TD>
+         &nbsp;
+      </TD><TD><TT>[ ][ ][ ][ ]</TT>
+      </TD><TD>0
+      </TD><TD>0
+      </TD><TD>0
+      </TD></TR>
+   <TR>
+      <TD>push 1
+      </TD><TD>
+         <TT>[1][ ][ ][ ]</TT>
+      </TD><TD>
+         0
+      </TD><TD>
+         1
+      </TD><TD>
+         1
+      </TD></TR>
+   <TR>
+      <TD>
+         push 2
+      </TD><TD>
+         <TT>[1][2][ ][ ]</TT>
+      </TD><TD>
+         0
+      </TD><TD>
+         2
+      </TD><TD>
+         2
+      </TD></TR>
+   <TR>
+      <TD>
+         pop =&gt; 1
+      </TD><TD>
+         <TT>[1][2][ ][ ]</TT>
+      </TD><TD>
+         1
+      </TD><TD>
+         1
+      </TD><TD>
+         2
+      </TD></TR>
+   <TR>
+      <TD>
+         push 3
+      </TD><TD>
+         <TT>[1][2][3][ ]</TT>
+      </TD><TD>
+         1
+      </TD><TD>
+         2
+      </TD><TD>
+         3
+      </TD></TR>
+   <TR>
+      <TD>
+         push 4
+      </TD><TD>
+         <TT>[1][2][3][4]</TT>
+      </TD><TD>
+         1
+      </TD><TD>
+         3
+      </TD><TD>
+         0
+      </TD></TR>
+   <TR>
+      <TD>
+         push 5
+      </TD><TD>
+         <TT>[5][2][3][4]</TT>
+      </TD><TD>
+         1
+      </TD><TD>
+         4
+      </TD><TD>
+         1
+      </TD></TR>
+   <TR>
+      <TD>
+         push 6
+      </TD><TD>
+         <TT>[5][6][3][4]</TT>
+      </TD><TD>
+         2
+      </TD><TD>
+         4
+      </TD><TD>
+         2
+      </TD></TR>
+   <TR>
+      <TD>
+         pop =&gt; 3
+      </TD><TD>
+         <TT>[5][6][3][4]</TT>
+      </TD><TD>
+         3
+      </TD><TD>
+         3
+      </TD><TD>
+         2
+      </TD></TR>
+</TABLE>
+
+<P>Note that no data is ever shifted in the array. A
+<TT>push_back()</TT> when the queue is full simply replaces the
+oldest element with the newest. That's what makes this a ring queue.
+</P>
+
+<H3><A NAME="TOC7"></A>A Ring Queue Iterator</H3>
+
+<P>Given our definitions of <TT>front()</TT> and <TT>back()</TT>
+above, you might think we could also define</P>
+
+<UL>
+   <LI><TT>begin()</TT> as the address of <TT>myBuffer[ myBegin
+   ]</TT></li>
+
+   <LI><TT>end()</TT> as the address of <TT>myBuffer[ myEnd ]</TT></li>
+</UL>
+
+<P>You can do this and it will compile, but then you try the
+following code:</P>
+
+<pre class="sample-code">RingQueue&lt;int, 4&gt; rq;
+
+for ( int i = 0; i &lt; 10 ++i ) rq.push_back( i * i );
+
+cout &lt;&lt; "There are " &lt;&lt; rq.size() &lt;&lt; " elements." &lt;&lt; endl;
+cout &lt;&lt; "Here they are:" &lt;&lt; endl;
+copy( rq.begin(), rq.end(),
+      ostream_iterator&lt;int&gt;( cout, "\n" ) );
+cout &lt;&lt; "Done" &lt;&lt; endl;
+&nbsp;</pre>
+
+<P>This produces the following output:</P>
+
+<pre class="sample-code">There are 4 elements.
+Here they are:
+Done
+&nbsp;</pre>
+
+<P>What happened? Clearly the ring queue thinks it has the full 5
+elements, but <TT>copy()</TT> doesn't seem to find them.</P>
+
+<P>Look in the table above at what happens when the ring queue is
+full. When the queue is full, i.e., <TT>mySize</TT> is equal to 4,
+then <TT>myBegin</TT> is equal to <TT>myEnd</TT>! That's because when
+<TT>mySize</TT> is N, the following equation is true:</P>
+
+<PRE class="sample-code">myEnd = (myBegin + mySize) % N = myBegin</PRE>
+
+<P>That means that the end of the queue is equal to the beginning!
+Therefore, any loop that starts with</P>
+
+<pre class="sample-code">while ( rq.begin() != rq.end() ) ...
+&nbsp;</pre>
+
+<P>on a full ring queue will stop immediately, because it will look
+like the queue were empty.</P>
+
+<P>Therefore, we need some other way to indicate where we are in the
+queue. An obvious solution is keep a simple offset from
+<TT>myBegin</TT>:</P>
+
+<UL>
+   <LI>An offset of 0 means the beginning of the queue.</li>
+
+   <LI>An offset of <TT>mySize</TT> means the end of the queue.</li>
+
+   <LI>An offset in between 0 and <TT>mySize</TT> means somewhere in
+   the middle of the queue.</li>
+</UL>
+
+<P>Our ring queue <B>iterator</B> therefore will need two things:
+</P>
+
+<UL>
+   <LI>a reference to a specific ring queue</li>
+
+   <LI>an offset variable</li>
+</UL>
+
+<P>Each of the operators we need to define becomes simple, at least
+conceptually:</P>
+
+<UL>
+   <LI><TT>operator!=()</TT> is true if two iterators have either
+   different ring queues or different offsets.</li>
+
+   <LI><TT>operator++()</TT> increments the offset.</li>
+
+   <LI><TT>operator*()</TT> returns the array location indexed by
+   <TT>(myBegin + offset) % N</TT>.</li>
+</UL>
+
+<P>Conceptually, that's that. C++ being C++, there's a lot of little
+details that need to be taken care of, to make the compiler happy,
+but the basic ideas are what have just been described.</P>
+
+<HR>
+
+<H2><A Name="TOC23">Defining Iterators for New Containers: C++ Details</A></H2>
+
+<H3><A NAME="TOC8"></A>C++ Detail #1: Linking Containers and
+Iterators</H3>
+
+<P>Container and iterator classes typically need to be closely
+linked. In particular</P>
+
+<UL>
+   <LI>In the container, <TT>begin()</TT> and <TT>end()</TT> need to
+   construct and return iterators.</li>
+
+   <LI>In the iterator, there needs to be a data member with a
+   reference to a container.</li>
+</UL>
+
+<P>This kind of mutual referencing implies that we need to define the
+container before the iterator and vice versa. Furthermore the
+iterator typically needs access to private container methods and data
+members in order to do its job.</P>
+
+<P>For this reason, the typical pattern for defining containers and
+their iterators is this:</P>
+
+<UL>
+   <LI>Forward declare the iterator class.</li>
+
+   <LI>Define the container.</li>
+
+   <LI>In the container, make the iterator a friend class.</li>
+
+   <LI>Define the iterator.</li>
+</UL>
+
+<P>Therefore, we have this code</P>
+
+<pre class="sample-code">// forward declare the iterator
+&nbsp;
+template &lt; class T, int N &gt; class RingIter;
+&nbsp;
+&nbsp;
+// define the container, make the iterator a friend
+&nbsp;
+template &lt; class T, int N &gt;
+class RingQueue {
+&nbsp;
+  friend class RingIter&lt; T, N &gt;;
+  ...
+};
+&nbsp;
+&nbsp;
+// define the iterator
+&nbsp;
+template &lt; class T, int N &gt;
+class RingIter {
+...
+};
+&nbsp;</pre>
+
+<P>Notice that the ring queue and its iterator have the same template
+parameters. This is typical.</P>
+
+<H3><A NAME="TOC9"></A>Digression: Integer Template Parameters</H3>
+
+<P>The <TT>int N</TT> template argument used above is a special
+feature of C++ that lets us write</P>
+
+<PRE class="sample-code">RingQueue&lt; int, 5 &gt; ringQueue;</PRE>
+
+<P>to make a 5-element ring queue of integers. The <TT>N</TT>
+parameter is "hard-wired" to 5 at compile-time, just like the
+<TT>T</TT> type parameter is hard-wired to <TT>int</TT>. This lets us
+declare the array in the ring queue at compile-time instead of
+dynamically allocating it. Of course, this also means you can't make
+a ring queue of some variable size N.</P>
+
+<H3><A NAME="TOC10"></A>C++ Detail #2: Making the Container
+Iterator-Friendly</H3>
+
+<P>Some of the STL functions, e.g., <TT>back_inserter()</TT>, need to
+know a few key pieces of information about a container in order to
+construct iterators. This information is communicated by a
+standardized set of <TT>typedef</TT>'s at the start of the container.
+For example, a container should define <TT>value_type</TT> and
+<TT>iterator</TT> so that other functions can tell what kind of thing
+this container can hold and what kind of iterator it uses.</P>
+
+<P>Fortunately, these type definitions are all pretty simple and
+usually identical from container to container. For our ring queue, we
+need</P>
+
+<pre class="sample-code">  typedef RingIter&lt;T, N&gt; iterator;
+  typedef ptrdiff_t difference_type;
+  typedef size_t size_type;
+  typedef T value_type;
+  typedef T * pointer;
+  typedef T &amp; reference;
+&nbsp;</pre>
+
+<P>The only thing specific to our ring queue is the iterator type
+definition.</P>
+
+<H3><A NAME="TOC11"></A>C++ Detail #3: <TT>begin()</TT> and
+<TT>end()</TT></H3>
+
+<P>The main functions in a container that return iterators are
+<TT>begin()</TT> and <TT>end()</TT> (we're ignoring reverse and
+constant iterators here).</P>
+
+<P>Typically, these simply call the constructor for the iterator
+class. There are usually at least two arguments:</P>
+
+<UL>
+   <LI>the container itself, to give the iterator access to the
+   container</li>
+
+   <LI>something else that indicates where the iterator is pointing</li>
+</UL>
+
+<P>In our case, the something else is the offset, so our definitions
+are simply</P>
+
+<pre class="sample-code">iterator begin() { return iterator( *this, 0 ); }
+&nbsp;
+iterator end() { return iterator( *this, mySize ); }
+&nbsp;</pre>
+
+<P>Notice that this is both readable and fairly safe from minor
+implementation changes, because we used the <TT>iterator</TT>
+typename instead of <TT>RingIter&lt;T, N&gt;</TT>.</P>
+
+<H3><A NAME="TOC12"></A>C++ Detail #3: Storing the Container in the
+Iterator</H3>
+
+<P>Constructing the iterator is relatively straightforward except for
+one detail. We have to make sure that the iterator contains a
+<EM>reference</EM> to the actual container, not a copy. In C++, it's
+very easy to inadvertently get a copy. If the constructor was defined
+with</P>
+
+<pre class="sample-code">RingIter( RingQueue rq, int size ) { ... }
+&nbsp;</pre>
+
+<P>we'd get a copy of the ring queue because <TT>rq</TT> is passed by
+value.</P>
+
+<P>We can fix this with</P>
+
+<pre class="sample-code">RingIter( RingQueue &amp; rq;, int size ) { ... }
+&nbsp;</pre>
+
+<P>but suppose the whole class looks like this:</P>
+
+<pre class="sample-code">template &lt; class T, int N &gt;
+class RingIter {
+private:
+  RingQueue&lt;T, N&gt; myRingQueue;
+  int mySize;
+public:
+  RingIter( RingQueue &amp; rq, int size )
+  {
+      myRingQueue = rq;
+      ...
+&nbsp;</pre>
+
+<P>In this case, we will <B>still</B> get a copy because
+<TT>myRingQueue = rq</TT> will make a copy of <TT>rq</TT>.</P>
+
+<P>Aha, we say, let's make <TT>myRingQueue</TT> a <B>reference
+variable</B>, i.e.,</P>
+
+<pre class="sample-code">template &lt; class T, int N &gt;
+class RingIter {
+private:
+  RingQueue&lt;T, N&gt; &amp; myRingQueue;
+  int mySize;
+public:
+  RingIter( RingQueue &amp; rq, int size )
+  {
+      myRingQueue = rq;
+      ...
+&nbsp;</pre>
+
+<P>This won't compile. Reference variables must be initialized to the
+thing they reference. E.g.,</P>
+
+<pre class="sample-code">int x = 10, &amp;y = x;   // fine, y references x
+y = 4;                // sets x to 4
+&nbsp;
+int a = 10, &amp;b;       // illegal, b has nothing to reference
+&nbsp;</pre>
+
+<P>Fortunately, there is a solution. There are two places where
+variables can be initialized: </P>
+
+<UL>
+   <LI>when they're declared</li>
+
+   <LI>in a constructor's initialization clauses</li>
+</UL>
+
+<P>Thus, the following code works fine:</P>
+
+<pre class="sample-code">template &lt; class T, int N &gt;
+class RingIter {
+private:
+  RingQueue&lt;T, N&gt; &amp; myRingQueue;
+  int mySize;
+public:
+  RingIter( RingQueue &amp; rq, int size )
+   : myRingQueue( rq ), mySize ( size )
+  {}
+&nbsp;</pre>
+
+<P>Initialization clauses are not assignment. They're initializations
+and work just like initializations in declarations.</P>
+
+<P>The above code makes <TT>myRingQueue</TT> a reference to whatever
+<TT>rq</TT> is. Since <TT>rq</TT> is in turn a reference to some
+container, <TT>myRingQueue</TT> is a reference to the container.
+Anything we do with or to <TT>myRingQueue</TT> is applied directly to
+the original container, not a copy.</P>
+
+<H3><A NAME="TOC13"></A>C++ Detail #4: Defining <TT>operator!=()</TT>
+for an iterator</H3>
+
+<P>The inequality operator is usually trivial. If your iterator class
+just contains pointers and/or integer indices, then the default
+equality operator that C++ defines will work just fine.</P>
+
+<P>We also need to define</P>
+
+<UL>
+   <LI><TT>operator==()</TT> to make sure we have the same container
+   and offset</li>
+
+   <LI><TT>operator!=()</TT> to call <TT>operator==()</TT>
+   appropriately</li>
+</UL>
+
+<P>The code for both is straightforward.</P>
+
+<H3><A NAME="TOC14"></A>C++ Detail #5: Defining <TT>operator*()</TT>
+for an iterator</H3>
+
+<P>Consider this simple piece of C++ code using an iterator:</P>
+
+<PRE class="sample-code">*dest = *source;</PRE>
+
+<P>In this statement,</P>
+
+<UL>
+   <LI><TT>*source</TT> returns the <B>value</B> pointed to by
+   <TT>source</TT></li>
+
+   <LI><TT>*dest</TT> returns the <B>location</B> pointed to by
+   <TT>dest</TT></li>
+</UL>
+
+<P><TT>*dest</TT> is said to return an <B>l-value</B>. The "l" stands
+for "left" as in "left-hand sides of an assignment statement." An
+l-value is something that can be used to store a value.</P>
+
+<P>What all this means is that when we define <TT>operator*()</TT>
+for an iterator class, we have to make sure that it returns a
+<B>reference</B> to a location. As long as we do that, the right
+thing will happen no matter which side of the assignment statement
+the dereferencing occurs.</P>
+
+<P>In our code, all we need to do is return the array reference, but
+we have to make sure that the return type of <TT>operator*()</TT> is
+a reference.</P>
+
+<pre class="sample-code">T &amp; operator*() { return myRingQueue[ myIncrement ]; }
+&nbsp;</pre>
+
+<P>We defined <TT>operator[]</TT> in <TT>RingQueue</TT> to make the
+above code simple.</P>
+
+<BLOCKQUOTE><P><B>Warning: watch your ampersands! </B>The following
+won't compile:</P>
+
+<PRE>T &amp; operator*() { return &amp; myRingQueue[ myIncrement ]; }
+&nbsp;</PRE>
+
+<P>The first ampersand says "return the address of the value
+specified by any <TT>return</TT> statements. The second ampersand
+says "return the address of <TT>myRingQueue[ myIncrement ]</TT>." So
+we end up trying to return the address of the address of
+<TT>myRingQueue[ myIncrement ]</TT>, which the compiler will
+correctly say is not the address of an object of type <TT>T</TT>.
+</P></BLOCKQUOTE>
+
+<H3><A NAME="TOC15"></A>C++ Detail #6: Defining <TT>operator++()</TT>
+for an iterator</H3>
+
+<P>The increment operator in C++ can be called in two ways:</P>
+
+<UL>
+   <LI>prefix, e.g., <TT>++iter</TT></li>
+
+   <LI>postfix, e.g., <TT>iter++</TT></li>
+</UL>
+
+<P>The prefix case is simple. We just increment the iterator's
+internal data members appropriately and return the modified iterator.
+In our case, that means</P>
+
+<pre class="sample-code">iterator &amp; operator++() { ++myOffset; return *this; }
+&nbsp;</pre>
+
+<P>The <TT>return *this;</TT> is standard in iterator definitions.
+</P>
+
+<P>The postfix case is a little more confusing, for two reasons:</P>
+
+<UL>
+   <LI>We have to know when we have the postfix case and not the
+   prefix case.</li>
+
+   <LI>The postfix case has to modify the iterator, but return what
+   it was before it changed.</li>
+</UL>
+
+<P>C++ has a kludge for the first problem. When <TT>operator++()</TT>
+is used postfix, the compiler generates a call with a dummy integer.
+This integer has no useful value. It's simply there so that you can
+define <TT>operator++( int )</TT> to handle the postfix case, and
+keep it separate from the code for the prefix case.</P>
+
+<P>To handle the second problem, we need to create a copy of the
+iterator and return it.</P>
+
+<pre class="sample-code">iterator operator++ ( int )
+{
+  RingIter&lt;T, N&gt; clone( *this );
+  ++myOffset;
+  return clone;
+}
+&nbsp;</PRE>
+
+<BLOCKQUOTE><P><B>Warning: </B>Hackers will notice that two copies actually get
+created: one when <TT>clone</TT> is built, and another when
+<TT>clone</TT> is returned by value. Do <B>not</B> try to fix this by
+returning a reference to the <TT>clone</TT>! This will crash your
+code, because it will return the address of an object that doesn't
+exist after this code exits.</P></BLOCKQUOTE>
+
+<H3><A Name="TOC32">C++ Details: What's Missing?</A></H3>
+
+<P>For our purposes in this class, the above should suffice for
+defining iterators for new containers. There are however many other
+details, including:</P>
+
+<UL>
+   <LI><B><TT>const</TT> iterators:</B> We really need to define two
+   iterator classes, one as above and another, call it
+   <TT>RingCIter</TT>, that is almost identical but wherever
+   <TT>RingIter</TT> returns a reference to the container,
+   <TT>RingCIter</TT> needs to return a <TT>const</TT> reference. We
+   also need to change begin() and end() in RingQueue to return the
+   right iterators, e.g.,
+
+   <PRE class="sample-code">typedef RingIter&lt;T, N&gt; iterator;
+
+typedef RingCIter&lt;T, N&gt; const_iterator;
+
+...
+
+iterator begin() { return iterator( *this, 0 ); }
+
+iterator begin() const { return const_iterator( *this, 0 ); }
+</PRE></li>
+
+   <LI><B>Reverse iterators:</B> We should defined <TT>rbegin()</TT>
+   and <TT>rend()</TT> to reverse version of the iterators that go
+   backward. Again, we need both regular and <TT>const</TT> versions.</li>
+
+   <LI><B>Iterator traits:</B> Some of the more complex STL
+   algorithms and adapters figure out what to do with containers and
+   iterators by looking at a data structure that holds an iterator's
+   <B>traits</B>. Traits say things like "this iterator is
+   bidirectional, points to integers, ..."  Such a data structure is
+   created as a data member of the iterator.</li>
+</UL>
+
+<P>For this and other issues in defining iterators, see an advanced
+book on C++ programming, such as Stroustrup's <EM>The C++ Programming
+Language</EM>, 3rd ed.</P>
+
+<HR>
+<p>
+<em>Comments?</em> <IMG SRC="images/comments.gif" alt="comment icon"> 
+<a href="http://www.cs.northwestern.edu/~riesbeck">Let me know!</a>
+</p>
+<p>
+  <a href="http://validator.w3.org/check?uri=referer"><img
+      src="http://www.w3.org/Icons/valid-html401"
+      alt="Valid HTML 4.01 Strict" height="31" width="88"></a>
+</p>
+</BODY>
+</HTML>

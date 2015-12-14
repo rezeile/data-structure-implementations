@@ -1,0 +1,4 @@
+stack:
+	g++ -o bagtest bagtest.cpp
+clean:
+	rm bagtest

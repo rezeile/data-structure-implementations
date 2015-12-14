@@ -1,8 +1,9 @@
 //#include "ar-stack.h"
 #include <iostream>
+#include "bag.h"
 using namespace std;
 
 int main() {
-	cout << "Hello World" << endl;
-	return 0;
+  Bag<double> numbers;
+  return 0;
 }

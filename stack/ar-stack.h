@@ -65,6 +65,11 @@ Stack<T>::~Stack() {
  * First increases the size if out of 
  * capacity. And then adds the element
  * to the top of the stack. 
+ * 
+ * Run Time: 
+ *  The push operation is a simple 
+ *  insert operation that takes a 
+ *  constant O(1) amortized time.
  */
 template<typename T>
 void Stack<T>::push(T a) {
@@ -86,6 +91,12 @@ void Stack<T>::push(T a) {
  * Pops an element from the top of the 
  * stack if there is an element, otherwise
  * returns null.
+ *
+ * Run Time: 
+ *  The pop operation is a simple 
+ *  insert operation that takes a 
+ *  constant O(1) amortized time.
+ *  What the fuck does that mean?
  */
  template <typename T>
  T Stack<T>::pop() {
