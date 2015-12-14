@@ -1,10 +1,9 @@
-# Data Structure Implementations
+### Data Structure Implementations
 
-## Author
-Eliezer Abate
-Last Edit: December 13 2015, 20:25 (PST)
+##### Author
+Last Edit: December 13 2015, 21:08 (PST)
 
-## Brief Description
+##### Brief Description
 
 This directory contains implementations of commonly known data structures in 
 c++. Each data structure is located in its own sub-directory (ex. stack/).
@@ -20,19 +19,19 @@ of a stack (namely, its push, pop, isEmpty, and size operations.)
 These implementations are not intended to be robust and comprehensive, and 
 were written so that I could brush up on my knowledge of data structures.
 
-## Finished Implementations
+##### Finished Implementations
 
 - LIFO Stack (Array-Based, Linked List)
 - Bag (Array-Based)
 
-## Still TOD0
+##### TOD0
 
-### From Sedgewick, Introduction to Algorithms 
+###### From Sedgewick, Introduction to Algorithms 
 
 - FIFO Queue (Array-Based, Linked List)
 - Union-Find
 
-### From C++ STL Library
+###### From C++ STL Library
 
 - Vector
 - List
