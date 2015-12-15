@@ -13,7 +13,7 @@ definition and implementation can be found.
 
 Furthermore, there is also an associated [data-structure]test.cpp file, which 
 performs basic tests on the data structure. For example, within the stack/ 
-folder, there is a stacktest.cppfile, which performs a test on the various operations 
+folder, there is a stacktest.cpp file, which performs a test on the various operations 
 of a stack (namely, its push, pop, isEmpty, and size operations.)
 
 These implementations are not intended to be robust and comprehensive, and 
