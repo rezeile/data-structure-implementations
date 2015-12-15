@@ -23,40 +23,61 @@
 
 #include <iterator> 
 
+/* forward declaration to allow use in BagIterator */
+template<typename T>
+class Bag;
+
+template<typename T>
+class BagIterator {
+public:
+  /* constructor */
+  BagIterator (T *&items, int pos) : _pos(pos), _items(items) {}
+  
+  /* define != operator for Bag */
+  bool operator != (BagIterator<T> other) {
+  	 return _pos != other._pos;
+  }
+
+  bool operator == (BagIterator<T> other) {
+  	 return _pos == other._pos;
+  }
+
+  /* overload ++ operator */
+  BagIterator& operator++ () {
+  	++_pos;
+  	return *this;
+  }
+
+  /* overload the dereference * operator */
+  T operator* () {
+	return _items[_pos];
+  }
+
+private:
+	int _pos; /* position */
+	T *_items;
+};
+
 static const int kInitialSize = 10;
 /* class declaration */
 template<typename T>
 class Bag {
-	friend class BagIterator<T>;
   public:
   	Bag();
   	~Bag();
   	void add(T a); /* add an item to the bag */
   	bool isEmpty();
   	int size();
-  	typedef BagIterator<T> iterator;
-  	typedef ptrdiff_t difference_type;
-  	typedef size_t size_type;
-  	typedef T value_type;
-  	typedef T *pointer;
-  	typedef T &reference;
-  	iterator begin() { return iterator(*this); }
-  	iterator end() { return iterator(*this + count); }
+  	BagIterator<T> begin() {
+  		return BagIterator<T>(items,0);
+  	}
+  	BagIterator<T> end() {
+  		return BagIterator<T>(items,count);
+  	}
   private:
   	int count;
   	int cap; /* internal array capacity */
   	T *items; /* array that will hold bag items internally */
-};
-
-/* 
- * Iterator: BagIterator
- * ---------------------
- * forward declared iterator class which will iterate through the items
- * in the bag 
- */
-template<typename T>
-class BagIterator {
-
 };
 
 /* 
@@ -68,6 +89,8 @@ class BagIterator {
 template<typename T>
 Bag<T>::Bag() {
 	items = new T[kInitialSize];
+  count = 0; /* initialize count */
+  cap = kInitialSize;
 }
 
 /*
