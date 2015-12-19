@@ -2,17 +2,54 @@
  * A LIFO stack that uses an raw array as its 
  * internal implementation.
  * Author: Eliezer Abate
- * Last Edit: November 9 2015 15:12 PST
+ * Last Edit: December 19 2015 15:12 PST
  */
 
 #ifndef _AR_STACK_H
 #define _AR_STACK_H
 
+#include <iterator>
 #include <exception>
+
+/* forward declaration to allow use in StackIterator */
+template<typename T>
+class Stack;
+
+/* StackIterator */
+template<typename T>
+class StackIterator {
+public:
+  /* constructor */
+  StackIterator (T *&items, int pos) : _pos(pos), _items(items) {}
+  
+  /* define != operator for Bag */
+  bool operator != (StackIterator<T> other) {
+  	 return _pos != other._pos;
+  }
+
+  bool operator == (StackIterator<T> other) {
+  	 return _pos == other._pos;
+  }
+
+  /* overload ++ operator */
+  StackIterator& operator++ () {
+  	++_pos;
+  	return *this;
+  }
+
+  /* overload the dereference * operator */
+  T operator* () {
+	return _items[_pos];
+  }
+
+private:
+	int _pos; /* position */
+	T *_items;
+};
 
 /* utility functions */
 template<typename T>
-void incr_capacity(T *items,int old_sz) {
+void increase_capacity(T *items,int old_sz) {
 	/* copy elements into new array */
 	T *new_items = new int[2 * old_sz];
 	for(int i = 0; i < old_sz; i++) {
@@ -22,7 +59,7 @@ void incr_capacity(T *items,int old_sz) {
 	items = new_items;
 }
 /* class declaration */
-static const int ini_sz = 100;
+static const int kInitialSize = 100;
 template<typename T>
 class Stack {
 	public:
@@ -31,9 +68,15 @@ class Stack {
 		void push(T a);
 		T pop();
 		bool empty();
+		StackIterator<T> begin() {
+  			return StackIterator<T>(items,0);
+  		}
+  		StackIterator<T> end() {
+  			return StackIterator<T>(items,top);
+  		}
 	private:
 		T *items;
-		int top;
+		int top; /* index of next top element [also serves as the count] */
 		int arr_size;
 };
 
@@ -48,9 +91,9 @@ class Stack {
  */
 template<typename T>
 Stack<T>::Stack() {
-	items = new int[ini_sz];
-	top = -1; // initialize to empty
-	arr_size = ini_sz;
+	items = new int[kInitialSize];
+	top = 0; /* initialize to empty */
+	arr_size = kInitialSize; /* initial size */
 }
 
 /* Destructor */
@@ -77,7 +120,7 @@ void Stack<T>::push(T a) {
 	int nxt_indx = top + 1;
 	if(nxt_indx == (arr_size - 1)) {
 		/* increase the array capacity */
-		incr_capacity(items,arr_size);
+		increase_capacity(items,arr_size);
 		arr_size *= 2;
 	}
 
