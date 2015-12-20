@@ -29,9 +29,9 @@ were written so that I could brush up on my knowledge of data structures.
 
 ###### From Sedgewick, Introduction to Algorithms 
 
-####### Implementation
+I. Implementation
 
-######## Ch. 1 Fundamentals: 1.3 Bags, Queues, and Stacks
+1. Ch. 1 Fundamentals: 1.3 Bags, Queues, and Stacks
 - Bag (Linked List) [Ch. 1.3]
 - LIFO Stack (Linked List) [Ch. 1.3]
 - FIFO Queue (Linked List) [Ch. 1.3]
@@ -41,15 +41,15 @@ were written so that I could brush up on my knowledge of data structures.
 - RingBuffer (Ch. 1.3.39)
 - Two stacks with a deque (Ch. 1.3.48)
 - Queue with three stacks. (Ch. 1.3.49)
-######## Ch. 1 Fundamentals: 1.4 Analysis of Algorithms
+2. Ch. 1 Fundamentals: 1.4 Analysis of Algorithms
 - Queue with two stacks. (Ch. 1.4.27)
 - Stack with a queue. (Ch. 1.4.28)
 - Steque with two stacks. (Ch. 1.4.29)
 - Deque with a stack and a steque. (Ch. 1.4.30)
 - Deque with three stacks. (Ch. 1.4.31)
 
-####### Conceptual Problems
-######## Ch. 1 Fundamentals: 1.4 Analysis of Algorithms
+II. Conceptual Problems
+1. Ch. 1 Fundamentals: 1.4 Analysis of Algorithms
 - Memory requirements on a 32-bit machine (Ch 1.4.33)
 - Space usage for pushdown stacks (Ch 1.4.36)
 
