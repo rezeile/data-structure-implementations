@@ -21,9 +21,9 @@ were written so that I could brush up on my knowledge of data structures.
 
 ##### Finished Implementations
 
-- Bag (Array-Based) [Sedgewick 1.3]
-- LIFO Stack (Array-Based) [Sedgewick 1.3]
-- FIFO Queue (Array-Based) [Sedgewick 1.3]
+- Bag (Array-based) [Sedgewick 1.3]
+- LIFO Stack (Array-based) [Sedgewick 1.3]
+- FIFO Queue (Array-based) [Sedgewick 1.3]
 
 ##### TODO
 
@@ -32,7 +32,7 @@ were written so that I could brush up on my knowledge of data structures.
 I. Implementation
 
 1. Ch. 1 Fundamentals: 1.3 Bags, Queues, and Stacks
-- Bag (Linked List) [Ch. 1.3]
+a. Bag (Linked List) [Ch. 1.3]
 - LIFO Stack (Linked List) [Ch. 1.3]
 - FIFO Queue (Linked List) [Ch. 1.3]
 - Steque (Ch. 1.3.32 Creative Problems)
@@ -42,7 +42,7 @@ I. Implementation
 - Two stacks with a deque (Ch. 1.3.48)
 - Queue with three stacks. (Ch. 1.3.49)
 2. Ch. 1 Fundamentals: 1.4 Analysis of Algorithms
-- Queue with two stacks. (Ch. 1.4.27)
+a. Queue with two stacks. (Ch. 1.4.27)
 - Stack with a queue. (Ch. 1.4.28)
 - Steque with two stacks. (Ch. 1.4.29)
 - Deque with a stack and a steque. (Ch. 1.4.30)
@@ -50,7 +50,7 @@ I. Implementation
 
 II. Conceptual Problems
 1. Ch. 1 Fundamentals: 1.4 Analysis of Algorithms
-- Memory requirements on a 32-bit machine (Ch 1.4.33)
+a. Memory requirements on a 32-bit machine (Ch 1.4.33)
 - Space usage for pushdown stacks (Ch 1.4.36)
 
 ###### From C++ STL Library
