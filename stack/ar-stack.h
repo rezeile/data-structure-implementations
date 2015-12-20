@@ -61,7 +61,6 @@ void resize(T *&items,int old_sz, int new_sz) {
 	for(int i = 0; i < sz; i++) {
 		new_items[i] = items[i];
 	}
-	/* why does it say that items was not allocated */
 	delete[] items; /* free memory */
 	items = new_items;
 }

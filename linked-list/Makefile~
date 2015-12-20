@@ -1,0 +1,4 @@
+linked-list: linked-list.h linkedtest.cc
+	g++ -o linked-list  linkedtest.cc
+clean:
+	rm linked-list
