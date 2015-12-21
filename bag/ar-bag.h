@@ -18,8 +18,8 @@
  * Wayne.
  */
 
-#ifndef _BAG_H
-#define _BAG_H
+#ifndef _AR_BAG_H
+#define _AR_BAG_H
 
 #include <iterator> 
 

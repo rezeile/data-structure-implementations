@@ -10,7 +10,7 @@
  */
 #include <iostream>
 #include <string>
-#include "bag.h"
+#include "ar-bag.h"
 
 static void doubleTest() {
   Bag<double> numbers;
@@ -26,7 +26,7 @@ static void doubleTest() {
     sum += *x;
     cnt++;
   }
-  std::cout << "Average: " << std::endl;
+  std::cout << "Average: " << sum / cnt << std::endl;
 }
 
 static void stringTest() {
