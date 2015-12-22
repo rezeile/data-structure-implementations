@@ -8,11 +8,9 @@
  * an linked list to internally store the items of the bag.
  *
  *
- * NOTE THAT THIS CLASS IS INCOMLETE AND DOES NOT HAVE THE ITERABLE 
- * FUNCTIONALITY BUILT-IN TO IT.
  * 
  * Author: Eliezer Abate
- * Last Edit: December 21, 2015
+ * Last Edit: December 22, 2015
  * Irvine, CA
  *
  * Sources/Further Reading
