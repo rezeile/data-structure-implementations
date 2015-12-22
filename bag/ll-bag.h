@@ -26,6 +26,7 @@
 #define _LL_BAG_H
 
 #include <iterator> 
+#include <iostream>
 
 /* node for linked list */
 template<typename T>
@@ -42,7 +43,7 @@ template<typename T>
 class BagIterator {
 public:
   /* constructor */
-  BagIterator (Node<T> *cur,int pos): _pos(pos), _cur(cur) {}
+  BagIterator (Node<T> *head,int pos): _pos(pos), _head(head) {}
   
   /* define != operator for Bag */
   bool operator != (BagIterator<T> other) {
@@ -56,11 +57,17 @@ public:
   /* overload ++ operator */
   BagIterator& operator++ () {
     ++_pos;
-  	return *this;
+  	return *this; /* Is (*this) a BagIterator? Yes! */
   }
 
   /* overload the dereference * operator */
+  /* We need to iterate through the local pointer _cur instead of _head because
+   * on successive calls, the internal data member _head will not always point
+   * to the head of the linked list. Thus, we ought to be careful in preserving
+   * the original value and only traversing the elements with the pointer _cur 
+   */
   T operator* () {
+    Node<T> *_cur = _head;
     for(int i = 0; i < _pos; i++) {
       _cur = _cur->next;
     }
@@ -69,7 +76,7 @@ public:
 
 private:
 	int _pos; /* position */
-  Node<T> *_cur;
+  Node<T> *_head;
 };
 
 /* class declaration */
@@ -90,6 +97,7 @@ class Bag {
   private:
   	int count;
   	Node<T> *head;
+    Node<T> *tail;
 };
 
 /* 
@@ -100,8 +108,7 @@ class Bag {
  */
 template<typename T>
 Bag<T>::Bag() {
-	head = new Node<T>;
-  head->next = NULL;
+	head = NULL;
   count = 0; /* initialize count */
 }
 
@@ -131,7 +138,7 @@ void Bag<T>::add(T a) {
    n->data = a;
    /* add to front */
    n->next = head;
-   head->next = n;
+   head = n;
    count++;
 }
 
@@ -145,7 +152,7 @@ void Bag<T>::add(T a) {
  */
  template <typename T>
  bool Bag<T>::isEmpty() {
- 	return count == 0;
+ 	return head == NULL;
  }
 
  /*

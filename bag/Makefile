@@ -9,4 +9,6 @@ ar-bagtest: ar-bag.h bagtest-ar.cc
 ll-bagtest: ll-bag.h bagtest-ll.cc
 	g++ -std=c++11 -o ll-bagtest bagtest-ll.cc
 clean:
-	rm ar-bagtest ll-bagtest
+	rm ar-bagtest ll-bagtest ar.txt ll.txt
+rm:
+	rm *~ .*~

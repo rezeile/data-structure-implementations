@@ -42,9 +42,22 @@ static void stringTest() {
   }
 }
 
+static void intTest() {
+  Bag<int> l;
+  int nums[3] = {3,6,9};
+  /* add to bag */
+  for(int i = 0; i < 3; i++) {
+    l.add(nums[i]);
+  }
+  /* range based for-loop output */
+  for(auto i = l.begin(); i != l.end(); ++i) 
+    std::cout << *i << std::endl;
+}
+
 
 int main() {
   doubleTest();
   stringTest();
+  intTest();
   return 0;
 }
