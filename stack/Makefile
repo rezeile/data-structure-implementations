@@ -1,7 +1,9 @@
-all: ll-stack ar-stack
-ll-stack: ll-stack.h stacktest.cc
-	g++ -std=c++11 -o ll-stack stacktest.cc
-ar-stack: ar-stack.h stacktest.cc
-	g++ -std=c++11 -o ar-stack stacktest.cc
+all: ll-stacktest ar-stacktest
+ll-stacktest: ll-stack.h ll-stacktest.cc
+	g++ -std=c++11 -o ll-stacktest ll-stacktest.cc
+ar-stacktest: ar-stack.h ar-stacktest.cc
+	g++ -std=c++11 -o ar-stacktest ar-stacktest.cc
 clean:
-	rm ll-stack ar-stack
+	rm ll-stacktest ar-stacktest
+rm:
+	rm *~ .*~
