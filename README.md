@@ -1,7 +1,7 @@
 ### Data Structure Implementations
 
 ##### Last Edit
-December 13 2015, 21:08 (PST)
+December 22 2015, 22:12 (PST)
 
 ##### Brief Description
 
@@ -21,9 +21,9 @@ were written so that I could brush up on my knowledge of data structures.
 
 ##### Finished Implementations
 
-- Bag (Array-based) [Sedgewick 1.3]
-- LIFO Stack (Array-based) [Sedgewick 1.3]
-- FIFO Queue (Array-based) [Sedgewick 1.3]
+- Bag (Array-based, Linked List) [Sedgewick 1.3]
+- LIFO Stack (Array-based, Linked List) [Sedgewick 1.3]
+- FIFO Queue (Array-based, Linked List) [Sedgewick 1.3]
 
 ##### TODO
 
@@ -31,26 +31,24 @@ were written so that I could brush up on my knowledge of data structures.
 
 I. Implementation
 
-1. Ch. 1 Fundamentals: 1.3 Bags, Queues, and Stacks
-a. Bag (Linked List) [Ch. 1.3]
-- LIFO Stack (Linked List) [Ch. 1.3]
-- FIFO Queue (Linked List) [Ch. 1.3]
+* Ch. 1 Fundamentals: 1.3 Bags, Queues, and Stacks
 - Steque (Ch. 1.3.32 Creative Problems)
 - Deque (Ch. 1.3.33 Creative Problems)
 - Josephus Problem (Ch. 1.3.37 Creative Problems)
 - RingBuffer (Ch. 1.3.39)
 - Two stacks with a deque (Ch. 1.3.48)
 - Queue with three stacks. (Ch. 1.3.49)
-2. Ch. 1 Fundamentals: 1.4 Analysis of Algorithms
-a. Queue with two stacks. (Ch. 1.4.27)
+* Ch. 1 Fundamentals: 1.4 Analysis of Algorithms
+- Queue with two stacks. (Ch. 1.4.27)
 - Stack with a queue. (Ch. 1.4.28)
 - Steque with two stacks. (Ch. 1.4.29)
 - Deque with a stack and a steque. (Ch. 1.4.30)
 - Deque with three stacks. (Ch. 1.4.31)
 
 II. Conceptual Problems
-1. Ch. 1 Fundamentals: 1.4 Analysis of Algorithms
-a. Memory requirements on a 32-bit machine (Ch 1.4.33)
+
+* Ch. 1 Fundamentals: 1.4 Analysis of Algorithms
+- Memory requirements on a 32-bit machine (Ch 1.4.33)
 - Space usage for pushdown stacks (Ch 1.4.36)
 
 ###### From C++ STL Library
