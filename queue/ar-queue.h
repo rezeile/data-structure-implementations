@@ -30,8 +30,8 @@ class Queue {
     T dequeue();
     int size();
     bool isEmpty();
-    bool isFull();
   private:
+    bool isFull();
   	void resize(int old_sz, int new_sz);
     T *items;  /* internal array holding queue elements */
     int cap;   /* array capacity */

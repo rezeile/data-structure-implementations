@@ -83,8 +83,8 @@ static void basic_test5() {
   Queue<int> q;
   try {
     q.dequeue();
-  } catch (std::exception &e) {
-    std::cout << e.what() << std::endl;
+  } catch (const char * &e) {
+    std::cout << "Caught Exception!!!" << std::endl;
   }
 }
 
