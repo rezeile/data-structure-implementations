@@ -10,7 +10,7 @@
  */
 #include <iostream>
 #include <string>
-#include "ll-bag.h"
+#include "ll-bag.hh"
 
 static void doubleTest() {
   Bag<double> numbers;

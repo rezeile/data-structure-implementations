@@ -9,7 +9,7 @@
 #ifndef _LL_STACK_H
 #define _LL_STACK_H
 
-#include <iostream>
+#include <iostream> /* for NULL ? */
 #include <exception>
 
 /* forward declaration to allow use in StackIterator */

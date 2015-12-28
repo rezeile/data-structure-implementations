@@ -10,7 +10,7 @@
  */
 #include <iostream>
 #include <string>
-#include "ar-bag.h"
+#include "ar-bag.hh"
 
 static void doubleTest() {
   Bag<double> numbers;

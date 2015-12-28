@@ -1,7 +1,7 @@
 ### Data Structure Implementations
 
 ##### Last Edit
-December 22 2015, 22:12 (PST)
+December 27 2015, 22:12 (PST)
 
 ##### Brief Description
 
@@ -24,6 +24,7 @@ were written so that I could brush up on my knowledge of data structures.
 - Bag (Array-based, Linked List) [Sedgewick 1.3]
 - LIFO Stack (Array-based, Linked List) [Sedgewick 1.3]
 - FIFO Queue (Array-based, Linked List) [Sedgewick 1.3]
+- Steque (Ch. 1.3.32 Creative Problems)
 
 ##### TODO
 
@@ -32,7 +33,6 @@ were written so that I could brush up on my knowledge of data structures.
 I. Implementation
 
 Ch. 1 Fundamentals: 1.3 Bags, Queues, and Stacks
-- Steque (Ch. 1.3.32 Creative Problems)
 - Deque (Ch. 1.3.33 Creative Problems)
 - Josephus Problem (Ch. 1.3.37 Creative Problems)
 - RingBuffer (Ch. 1.3.39)

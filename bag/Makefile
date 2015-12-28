@@ -4,9 +4,9 @@
 # The -o specifies the output file name after compilation
 
 all: ar-bagtest ll-bagtest
-ar-bagtest: ar-bag.h bagtest-ar.cc
+ar-bagtest: ar-bag.hh bagtest-ar.cc
 	g++ -std=c++11 -o ar-bagtest bagtest-ar.cc
-ll-bagtest: ll-bag.h bagtest-ll.cc
+ll-bagtest: ll-bag.hh bagtest-ll.cc
 	g++ -std=c++11 -o ll-bagtest bagtest-ll.cc
 clean:
 	rm ar-bagtest ll-bagtest ar.txt ll.txt
