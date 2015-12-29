@@ -17,7 +17,10 @@ folder, there is a stacktest.cpp file, which performs a test on the various oper
 of a stack (namely, its push, pop, isEmpty, and size operations.)
 
 These implementations are not intended to be robust and comprehensive, and 
-were written so that I could brush up on my knowledge of data structures.
+were written so that I could brush up on my knowledge of data structures. Lastly, 
+chapter and section references in this text refer to the text Introduction to 
+Algorithms, by Robert Segdewick and Kevin Wayne (Fourth Edition), unless 
+explicity specified otherwise.
 
 ##### Finished Implementations
 
@@ -29,17 +32,16 @@ were written so that I could brush up on my knowledge of data structures.
 
 ##### TODO
 
-###### From Sedgewick, Introduction to Algorithms 
-
-I. Implementation
-
-Ch. 1 Fundamentals: 1.3 Bags, Queues, and Stacks
+I. More Data Structure Implementations
+- Priority Queue (Section 2.7)
 - ResizingDeque (1.3.33 Creative Problems)
+- String (class representing a string)
+
+II. Creative Problems
 - Josephus Problem (Ch. 1.3.37 Creative Problems)
 - RingBuffer (Ch. 1.3.39)
 - Two stacks with a deque (Ch. 1.3.48)
 - Queue with three stacks. (Ch. 1.3.49)
-Ch. 1 Fundamentals: 1.4 Analysis of Algorithms
 - Queue with two stacks. (Ch. 1.4.27)
 - Stack with a queue. (Ch. 1.4.28)
 - Steque with two stacks. (Ch. 1.4.29)
@@ -48,22 +50,6 @@ Ch. 1 Fundamentals: 1.4 Analysis of Algorithms
 
 II. Conceptual Problems
 
-Ch. 1 Fundamentals: 1.4 Analysis of Algorithms
 - Memory requirements on a 32-bit machine (Ch 1.4.33)
 - Space usage for pushdown stacks (Ch 1.4.36)
-
-###### From C++ STL Library
-
-- Vector
-- List
-- Forward_List
-- Deque
-- Set
-- MultiSet
-- Map
-- MultiMap
-- Unordered Map
-- Unordered Multimap
-- Unordered Set
-- Unordered Multiset
 
