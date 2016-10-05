@@ -33,12 +33,19 @@ Introduction to Algorithms, by Cormen et al.
 - Deque (Ch. 1.3.33 Creative Problems)
 
 ##### TODO
-
-- Priority Queue (backed w/ traditional binary heap, van-emde-boas trees, and fibonnacci heaps)
-- String (w/ JS member methods in C++)
 - Map (backed by a HashTable (w/ chaining & open addressing)
+- Priority Queue (backed w/ traditional binary heap, van-emde-boas trees, and fibonnacci heaps)
+- Trie
 - Set (backed by a Red Black Tree)
 - Binary Search Tree (unbalanced) 
-- Trie
+- String (w/ JS member methods in C++)
 - Suffix Tree/Array
 - B-Tree
+- Graph (using adjacency list/matrix, and edge lists)
+- Union-Find Disjoint Sets (see Sedgewick)
+- Kd-Tree
+- Segment Tree
+- Fenwick Tree (a.k.a Binary Indexed Tree)
+- AVL Tree (implementing a set or a map)
+- Splay Trees (implementing a set or map)
+- Bloom Filters (implementing disjoing set)
