@@ -33,7 +33,7 @@ explicity specified otherwise.
 ##### TODO
 
 - Priority Queue (Section 2.7)
-- ResizingDeque (1.3.33 Creative Problems)
 - String (class representing a string)
-
+- Map (backed by a HashTable (w/ chaining & open addressing)
+- Set (backed by a Red Black Tree)
 
