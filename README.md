@@ -20,7 +20,9 @@ These implementations are not intended to be robust and comprehensive, and
 were written so that I could brush up on my knowledge of data structures. Lastly, 
 chapter and section references in this text refer to the text Introduction to 
 Algorithms, by Robert Segdewick and Kevin Wayne (Fourth Edition), unless 
-explicity specified otherwise.
+explicity specified otherwise. Newer data structures, which are not referenced, 
+are incorporated from the Algorithm Design Manual text by Steven Skiena, and 
+Introduction to Algorithms, by Cormen et al.
 
 ##### Finished Implementations
 
@@ -33,8 +35,10 @@ explicity specified otherwise.
 ##### TODO
 
 - Priority Queue (Section 2.7)
-- String (class representing a string)
-  1. Implement JavaScript string member methods in c++
+- String (w/ JS member methods in C++)
 - Map (backed by a HashTable (w/ chaining & open addressing)
 - Set (backed by a Red Black Tree)
 - Binary Search Tree (unbalanced) 
+- Trie
+- Suffix Tree/Array
+- B-Tree
