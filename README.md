@@ -34,6 +34,7 @@ explicity specified otherwise.
 
 - Priority Queue (Section 2.7)
 - String (class representing a string)
+  1. Implement JavaScript string member methods in c++
 - Map (backed by a HashTable (w/ chaining & open addressing)
 - Set (backed by a Red Black Tree)
-
+- Binary Search Tree (unbalanced) 
