@@ -1,8 +1,5 @@
 ### Data Structure Implementations
 
-##### Last Edit
-December 27 2015, 23:47 (PST)
-
 ##### Brief Description
 
 This directory contains implementations of commonly known data structures in 
@@ -24,15 +21,17 @@ explicity specified otherwise. Newer data structures, which are not referenced,
 are incorporated from the Algorithm Design Manual text by Steven Skiena, and 
 Introduction to Algorithms, by Cormen et al.
 
-##### Finished Implementations
+Finished implementations will be crossed out via a ~~strikethrough~~ whereas 
+pending implementations are listed below the order they will subsequently be 
+implemented.
 
-- Bag (Array-based, Linked List) [Sedgewick 1.3]
-- LIFO Stack (Array-based, Linked List) [Sedgewick 1.3]
-- FIFO Queue (Array-based, Linked List) [Sedgewick 1.3]
-- Steque (Ch. 1.3.32 Creative Problems)
-- Deque (Ch. 1.3.33 Creative Problems)
+##### Implementations
 
-##### TODO
+- ~~Bag (Array-based, Linked List) [Sedgewick 1.3]~~
+- ~~LIFO Stack (Array-based, Linked List) [Sedgewick 1.3]~~
+- ~~FIFO Queue (Array-based, Linked List) [Sedgewick 1.3]~~
+- ~~Steque (Ch. 1.3.32 Creative Problems)~~
+- ~~Deque (Ch. 1.3.33 Creative Problems)~~
 - Map (backed by a HashTable (w/ chaining & open addressing)
 - Priority Queue (backed w/ traditional binary heap, van-emde-boas trees, and fibonnacci heaps)
 - Trie
