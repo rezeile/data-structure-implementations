@@ -48,3 +48,4 @@ implemented.
 - AVL Tree (implementing a set or a map)
 - Splay Trees (implementing a set or map)
 - Bloom Filters (implementing disjoing set)
+- Cartesian Tree
