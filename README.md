@@ -34,7 +34,7 @@ Introduction to Algorithms, by Cormen et al.
 
 ##### TODO
 
-- Priority Queue (Section 2.7)
+- Priority Queue (backed w/ traditional binary heap, van-emde-boas trees, and fibonnacci heaps)
 - String (w/ JS member methods in C++)
 - Map (backed by a HashTable (w/ chaining & open addressing)
 - Set (backed by a Red Black Tree)
