@@ -1,6 +1,6 @@
 ### Data Structure Implementations
 
-##### Brief Description
+##### Description
 
 This directory contains implementations of commonly known data structures in 
 c++. Each data structure is located in its own sub-directory (ex. stack/).
@@ -48,4 +48,4 @@ implemented.
 - AVL Tree (implementing a set or a map)
 - Splay Trees (implementing a set or map)
 - Bloom Filters (implementing disjoing set)
-- Cartesian Tree
+- Cartesian Tree 
