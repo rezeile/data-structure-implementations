@@ -28,8 +28,8 @@ implemented.
 ##### Implementations
 
 - ~~Bag (Array-based, Linked List) [Sedgewick 1.3]~~
-- ~~LIFO Stack (Array-based, Linked List) [Sedgewick 1.3]~~
-- ~~FIFO Queue (Array-based, Linked List) [Sedgewick 1.3]~~
+- ~~Stack (Array-based, Linked List) [Sedgewick 1.3]~~
+- ~~Queue (Array-based, Linked List) [Sedgewick 1.3]~~
 - ~~Steque (Ch. 1.3.32 Creative Problems)~~
 - ~~Deque (Ch. 1.3.33 Creative Problems)~~
 - Map (backed by a HashTable (w/ chaining & open addressing)
