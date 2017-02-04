@@ -49,3 +49,5 @@ implemented.
 - Splay Trees (implementing a set or map)
 - Bloom Filters (implementing disjoing set)
 - Cartesian Tree 
+- Treaps
+- Skip Lists
