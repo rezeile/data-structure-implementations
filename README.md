@@ -1,6 +1,6 @@
-### Data Structure Implementations
+# Data Structure Implementations
 
-##### Description
+## Description
 
 This directory contains implementations of commonly known data structures in 
 c++. Each data structure is located in its own sub-directory (ex. stack/).
@@ -25,9 +25,9 @@ Finished implementations will be crossed out via a ~~strikethrough~~ whereas
 pending implementations are listed below the order they will subsequently be 
 implemented.
 
-##### Implementations
+## Implementations
 
-* Abstract Data Types
+###  Abstract Data Types
 
 | Abstract Data Type | Date Completed | Link |
 |---|---|---|
@@ -36,5 +36,5 @@ implemented.
 | Queue | Dec 22, 2015 | [queue](https://github.com/rezeile/data-structures/tree/master/queue)
 | Steque | Dec 27, 2015 | [steque](https://github.com/rezeile/data-structures/tree/master/steque)
 | Deque | Dec 27, 2015 | [deque](https://github.com/rezeile/data-structures/tree/master/deque)
-| Union Find Disjoint Set |  [union-find](https://github.com/rezeile/data-structures/tree/master/union-find)
+| Union Find Disjoint Set | Oct 25 2017 |  [union-find](https://github.com/rezeile/data-structures/tree/master/union-find)
 
