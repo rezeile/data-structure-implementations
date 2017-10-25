@@ -29,7 +29,7 @@ implemented.
 
 ###  Abstract Data Types
 
-| Abstract Data Type | Date Completed | Link |
+| Data Type | Date Completed | Source |
 |---|---|---|
 | Bag | Dec 13, 2015 | [bag](https://github.com/rezeile/data-structures/tree/master/bag) |
 | Stack | Oct 14, 2016 | [stack](https://github.com/rezeile/data-structures/tree/master/stack)
