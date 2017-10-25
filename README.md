@@ -32,9 +32,10 @@ implemented.
 | Data Type | Date Completed | Source |
 |---|---|---|
 | Bag | Dec 13, 2015 | [bag](https://github.com/rezeile/data-structures/tree/master/bag) |
-| Stack | Oct 14, 2016 | [stack](https://github.com/rezeile/data-structures/tree/master/stack)
 | Queue | Dec 22, 2015 | [queue](https://github.com/rezeile/data-structures/tree/master/queue)
+| List | Dec 22, 2015 | [list](https://github.com/rezeile/data-structures/tree/master/list)
 | Steque | Dec 27, 2015 | [steque](https://github.com/rezeile/data-structures/tree/master/steque)
 | Deque | Dec 27, 2015 | [deque](https://github.com/rezeile/data-structures/tree/master/deque)
+| Stack | Oct 14, 2016 | [stack](https://github.com/rezeile/data-structures/tree/master/stack)
+| Priority Queue | Oct 4, 2016 | [priority-queue](https://github.com/rezeile/data-structures/tree/master/priority-queue) 
 | Union Find Disjoint Set | Oct 25 2017 |  [union-find](https://github.com/rezeile/data-structures/tree/master/union-find)
-
