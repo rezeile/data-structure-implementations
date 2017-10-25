@@ -32,6 +32,7 @@ implemented.
 - ~~Queue (Array-based, Linked List) [Sedgewick 1.3]~~
 - ~~Steque (Ch. 1.3.32 Creative Problems)~~
 - ~~Deque (Ch. 1.3.33 Creative Problems)~~
+- ~~Union-Find Disjoint Sets (see Sedgewick)
 - Map (backed by a HashTable (w/ chaining & open addressing)
 - Priority Queue (backed w/ traditional binary heap, van-emde-boas trees, and fibonnacci heaps)
 - Trie
