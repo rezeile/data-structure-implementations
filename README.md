@@ -13,18 +13,6 @@ performs basic tests on the data structure. For example, within the stack/
 folder, there is a stacktest.cpp file, which performs a test on the various operations 
 of a stack (namely, its push, pop, isEmpty, and size operations.)
 
-These implementations are not intended to be robust and comprehensive, and 
-were written so that I could brush up on my knowledge of data structures. Lastly, 
-chapter and section references in this text refer to the text Introduction to 
-Algorithms, by Robert Segdewick and Kevin Wayne (Fourth Edition), unless 
-explicity specified otherwise. Newer data structures, which are not referenced, 
-are incorporated from the Algorithm Design Manual text by Steven Skiena, and 
-Introduction to Algorithms, by Cormen et al.
-
-Finished implementations will be crossed out via a ~~strikethrough~~ whereas 
-pending implementations are listed below the order they will subsequently be 
-implemented.
-
 ## Implementations
 
 ###  Abstract Data Types
