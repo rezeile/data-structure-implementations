@@ -41,7 +41,6 @@ implemented.
 - Suffix Tree/Array
 - B-Tree
 - Graph (using adjacency list/matrix, and edge lists)
-- Union-Find Disjoint Sets (see Sedgewick)
 - Kd-Tree
 - Segment Tree
 - Fenwick Tree (a.k.a Binary Indexed Tree)
@@ -51,3 +50,4 @@ implemented.
 - Cartesian Tree 
 - Treaps
 - Skip Lists 
+- Concurrent Data Structures 
