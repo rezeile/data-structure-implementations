@@ -27,28 +27,14 @@ implemented.
 
 ##### Implementations
 
-- ~~Bag (Array-based, Linked List) [Sedgewick 1.3]~~
-- ~~Stack (Array-based, Linked List) [Sedgewick 1.3]~~
-- ~~Queue (Array-based, Linked List) [Sedgewick 1.3]~~
-- ~~Steque (Ch. 1.3.32 Creative Problems)~~
-- ~~Deque (Ch. 1.3.33 Creative Problems)~~
-- ~~Union-Find Disjoint Sets (see Sedgewick)
-- Map (backed by a HashTable (w/ chaining & open addressing)
-- Priority Queue (backed w/ traditional binary heap, van-emde-boas trees, and fibonnacci heaps)
-- Trie
-- Set (backed by a Red Black Tree)
-- Binary Search Tree (unbalanced) 
-- String (w/ JS member methods in C++)
-- Suffix Tree/Array
-- B-Tree
-- Graph (using adjacency list/matrix, and edge lists)
-- Kd-Tree
-- Segment Tree
-- Fenwick Tree (a.k.a Binary Indexed Tree)
-- AVL Tree (implementing a set or a map)
-- Splay Trees (implementing a set or map)
-- Bloom Filters (implementing disjoing set)
-- Cartesian Tree 
-- Treaps
-- Skip Lists 
-- Concurrent Data Structures 
+* Abstract Data Types
+
+| Abstract Data Type | Date Completed | Link |
+|---|---|---|
+| Bag | Dec 13, 2015 | [bag](https://github.com/rezeile/data-structures/tree/master/bag) |
+| Stack | Oct 14, 2016 | [stack](https://github.com/rezeile/data-structures/tree/master/stack)
+| Queue | Dec 22, 2015 | [queue](https://github.com/rezeile/data-structures/tree/master/queue)
+| Steque | Dec 27, 2015 | [steque](https://github.com/rezeile/data-structures/tree/master/steque)
+| Deque | Dec 27, 2015 | [deque](https://github.com/rezeile/data-structures/tree/master/deque)
+| Union Find Disjoint Set |  [union-find](https://github.com/rezeile/data-structures/tree/master/union-find)
+
